@@ -1,0 +1,18 @@
+# Віртуальне оточення та файли
+Проект/
+venv/
+env/
+.env
+
+# Бази даних
+*.db
+*.sqlite3
+
+# Кеш Python і Playwright
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
