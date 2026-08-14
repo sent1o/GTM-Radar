@@ -1,0 +1,197 @@
+Explain is LIVE on Producthunt 😻
+SUPPORT US
+Fullstack Path
+Backend Path
+Frontend Path
+AI Engineer Path
+Join Discord
+Join Subreddit
+Weekly Newsletter
+Getting Help
+Scrimba Merch
+Accessibility Statement
+Show more...
+SIGN IN
+UPGRADE TO PRO
+Learn to Code Like a Pro
+We teach you the essential skills you need to succeed as a dev in 2026
+TRY IT FOR FREE
+Takes 2 min - no signup
+Join 2 million learners from companies like
+73
+0
+0
+Filter 73 results...
+Most Popular
+The Fullstack Developer Path
+96 modules
+108.4 hrs
+Learn the entire stack from backend to frontend. Focused on hireable skills from the JavaScript ecosystem, including React, Node, Express, Next, TypeScript, and even AI engineering. This massive course is your one-stop shop for breaking into the tech industry.
+Learn React
+In partnership with
+13 modules
+15.1 hrs
+This is the ideal starting point for anyone eager to learn modern React basics in the most interactive, hands-on way possible.
+Learn JavaScript
+In partnership with
+9 modules
+9.4 hrs
+Learn the basics of JavaScript by solving 140+ interactive coding challenges. Along the way you will build a game, a browser extension, and even a mobile app!
+The Backend Developer Path
+63 modules
+36.2 hrs
+The comprehensive path to becoming a backend developer. Focused on in-demand skills from the JavaScript ecosystem, including Node, Express, and TypeScript, this path also explores databases, cybersecurity, DevOps, APIs, algorithms, and more.
+The Frontend Developer Path
+In partnership with
+70 modules
+81.6 hrs
+Launch your career as a frontend developer with this immersive path. Created in collaboration with Mozilla MDN, ensuring that you'll learn the latest best practices for modern web development, and stand out from other job applicants.
+Learn HTML and CSS
+In partnership with
+7 modules
+5.7 hrs
+This course will teach you HTML and CSS through building and deploying five awesome projects. It is also fully interactive, with over 75 coding challenges. There are no prerequisites, so it is suitable for absolute beginners.
+The AI Engineer Path
+13 modules
+11.4 hrs
+Build apps powered by generative AI - an essential skill for product teams at startups, agencies, and large corporations. Learn about agents, RAG, MCP, multimodality, context engineering, and more.
+Learn Git and Github
+40 lessons
+103 min
+Learn how to confidently track changes, experiment safely, and collaborate on real projects using the same workflows professional developers rely on every day.
+Learn Cybersecurity
+4 modules
+5 hrs
+Learn the security mindset that separates professional developers from hobbyists. Through hands-on challenges, you'll learn to identify vulnerabilities, defend against common attacks, and build applications users can trust.
+Data Structures and Algorithms
+35 lessons
+2.5 hrs
+Build a solid foundation in data structures and algorithms, the key to writing efficient code and acing technical interview challenges. You'll learn Big O, recursion, sorting, searching, and core data structures like stacks, queues, trees, and graphs, all with tons of challenges.
+Learn Python
+133 lessons
+4.1 hrs
+Discover Python, one of the most in-demand programming languages, from the ground up, building three real projects along the way: an expense-splitting app, a word-scramble game, and a karaoke queue manager.
+Learn SQL
+50 lessons
+3.8 hrs
+Discover how to build efficient, data-driven applications using SQL, the essential database language.
+Learn TypeScript
+79 lessons
+4.2 hrs
+This course introduces you to the essential building blocks of TypeScript through a hands-on approach. You'll explore the fundamentals of TypeScript, TS in React and TS in Express, plus build a TS-based project.
+Learn Node.js
+53 lessons
+3.5 hrs
+Discover how to craft fast, efficient backends with Node.js, the go-to runtime for modern web developers. From APIs to fullstack apps, see how Node.js makes backend development smooth, scalable, and fun.
+Learn Next.js
+127 lessons
+8.5 hrs
+Learn to build fast, modern web apps with Next.js, the powerful React framework. You’ll cover routing, layouts, rendering strategies, data fetching, dynamic routes, database-driven pages, search, sorting, pagination, and more, while building PrintForge, a site for browsing 3D printing models.
+Intro to AI Engineering
+58 lessons
+2.5 hrs
+Learn to build AI-powered apps with modern LLM tooling, the fastest-growing layer of today’s software stack. You'll cover prompts, tokens, systems messages, streaming, and more as we build GiftGenie, a an AI-powered gift idea generator.
+Intro to Supabase
+57 lessons
+4.8 hrs
+Master Supabase essentials by building a real-world React.js Sales Dashboard App with authentication, real-time data operations, and secure user management.
+Advanced React
+6 modules
+18.8 hrs
+The best learning experience paired with a world-class instructor. This massive course aims to turn you into hireable React developer as fast as possible.
+Advanced JavaScript
+11 modules
+9.8 hrs
+Master advanced JavaScript concepts through a ton of hands-on challenges designed to deepen your understanding of the world's most used coding language!
+Intro to NestJS
+22 lessons
+83 min
+Build scalable backend applications with NestJS, one of the most popular Node.js frameworks. Harness its modular architecture, TypeScript support, and built-in tools to create clean, testable, code.
+Learn Tailwind CSS
+65 lessons
+2.2 hrs
+The ultimate hands-on journey with Tailwind CSS! Learn the essentials of Tailwind and then flex your new skills with five real-world projects.
+Learn Context Engineering
+15 lessons
+59 min
+Learn context engineering concepts using Vercel's AI SDK and the OpenRouter API to build AI applications that don't crash or forget important details. You'll learn about system prompts, context window management, token optimization, and context summarization as you build real chat applications.
+Learn Accessible Web Design
+29 lessons
+96 min
+Learn how to write accessible HTML by solving interactive coding challenges and fixing a real-world website.
+Learn Firebase
+40 lessons
+3.4 hrs
+A deep dive into Firebase, a cloud service from Google that lets you build powerful apps by just using HTML, CSS and JavaScript without a backend. This course cover Authentication, Cloud Firestore and Security Rules.
+Learn UI Design
+12 modules
+8.6 hrs
+This massive UI design course teaches you to build beautiful and well-functioning user interfaces using HTML and CSS. It's filled with interactive tutorials to ensure that the knowledge sticks with you. Created by Gary Simon, the most popular online instructor on this subject.
+Learn to Code with AI
+47 lessons
+4.5 hrs
+A new kind of coding course that's less about the details of coding and more about creating, experimenting, and realizing your ideas, even without the coding know-how!
+Learn AI Agents
+31 lessons
+117 min
+Learn how to build LLM-powered agents that can do multi-step reasoning and interact with its environment via functions and APIs.
+Learn Flexbox
+16 lessons
+52 min
+This tutorial teaches you CSS Flexbox through 12 interactive screencasts. You'll learn all the key concepts in addition to building a responsive navbar and a neat image grid.
+Learn CSS Grid
+20 lessons
+63 min
+This tutorial teaches you CSS Grid through 14 interactive screencasts. You'll learn all the key concepts while building three awesome layouts: a website, an image grid, and an article. Plus, you'll learn how to combine CSS Grid with Flexbox.
+Learn Vue
+27 lessons
+96 min
+Learn Vue as you build real projects, dive into its core features, and create dynamic, reusable, and reactive apps with ease.
+Build a Support Agent with Vercel AI SDK
+23 lessons
+114 min
+Use the popular Vercel AI SDK to create and ship a customer support agent that makes autonomous decisions to either answer questions based on your support docs or search the web in real time.
+Build Serverless AI Agents with Langbase
+19 lessons
+49 min
+Learn to build AI agents with Langbase, the world’s most powerful serverless AI cloud.
+Intro to Model Context Protocol (MCP)
+12 lessons
+37 min
+Learn how to power up your AI apps with Model Context Protocol (MCP), a new way to connect AI models to real-world tools and data.
+Testing in React
+12 lessons
+0 min
+Learn how to confidently test your React apps using vTest, React Testing Library, and more. This hands-on course walks you through writing, organizing, and running tests to ensure your apps are accessible, bug-free, and production-ready.
+Intro to Astro
+45 lessons
+2.1 hrs
+Learn Astro, the modern web framework for building fast, content-rich websites using components and Markdown. In this course, you’ll learn how to create and deploy a personal website from scratch, combining performance with a fun and flexible developer experience.
+Command Line Basics
+26 lessons
+101 min
+Discover terminal basics, bash commands, and essential CLI skills used by developers, DevOps engineers, and data analysts.
+Scrimba uses cookies 🍪
+They help us understand how people use the site and measure our advertising.
+Privacy Policy
+Upgrade to Scrimba Pro
+Your Pro Plan includes
+Fullstack Developer Path
+Backend Developer Path
+Frontend Developer Path
+AI Engineer Path
+All 70+ courses (now with multiple-language captions)
+Course certificates
+Unlimited Challenges and Instant Feedback
+Full access to Discord community
+Your total price
+Annual Discount 50% off
+7 day money-back guarantee
+€35.00€17.67/ month
+Billed annually for €212.00
+SIGN UP TO CONTINUE
+CONTINUE WITH GITHUB
+CONTINUE WITH GOOGLE
+CONTINUE WITH EMAIL
+If you do not have an account, choose your preferred method to create one.
+Having issues? Contact us here

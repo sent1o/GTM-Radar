@@ -17,7 +17,7 @@ def init_db():
         tagline TEXT,
         tags TEXT, 
         votes_count INTEGER DEFAULT 0,
-        status TEXT DEFAULT 'active',
+        status TEXT DEFAULT 'unscraped',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     ''')
@@ -49,7 +49,7 @@ def init_db():
     # Таблиця 4: Insights
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS insights (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
         startup_id INTEGER,
         ai_summary TEXT,
         old_snapshot_id INTEGER,

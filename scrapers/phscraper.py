@@ -1,8 +1,6 @@
 import requests
 import time
-import time
 import db
-from typing import List, Dict, Any
 
 class ProductHuntScraper:
     def __init__(self, api_token: str):
@@ -10,22 +8,16 @@ class ProductHuntScraper:
         self.headers = {
             "Authorization": f"Bearer {api_token}",
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            "Accept": "application/json"
         }
-        # Використовуємо slugs для GraphQL запиту
-        self.topics = [
-            'ai-agents', 
-            'llms', 
-            'ai-workflow-automation', 
-            'productivity', 
-            'marketing', 
-            'developer-tools'
-        ]
-        
-        # Запит дістає пости за топіком, одразу з потрібною датою і метаданими
-        self.query = """
+        # Тут можеш вказати топіки, які хочеш викачати
+        self.topics = ["artificial-intelligence", "b2b", "saas"] 
+
+    def fetch_startups(self, topic: str, cursor: str = None):
+        # Додали $cursor для пагінації
+        query = """
         query($topic: String!, $cursor: String) {
-          posts(first: 20, after: $cursor, topic: $topic) {
+          posts(topic: $topic, first: 20, after: $cursor) {
             pageInfo {
               hasNextPage
               endCursor
@@ -34,10 +26,9 @@ class ProductHuntScraper:
               node {
                 id
                 name
-                tagline
                 website
+                tagline
                 votesCount
-                createdAt
                 topics {
                   edges {
                     node {
@@ -50,63 +41,72 @@ class ProductHuntScraper:
           }
         }
         """
-
-    def fetch_startups(self, topic: str, cursor: str = None) -> Dict[str, Any]:
         variables = {"topic": topic, "cursor": cursor}
-        payload = {"query": self.query, "variables": variables}
-        
-        response = requests.post(self.api_url, headers=self.headers, json=payload)
-        
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"Помилка {response.status_code} для топіка {topic}: {response.text}")
-            return {}
+        payload = {"query": query, "variables": variables}
 
-    def parse_response(self, raw_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        parsed_data = []
-        
-        if not raw_data or "data" not in raw_data or not raw_data["data"]["posts"]:
-            return parsed_data
+        try:
+            response = requests.post(self.api_url, headers=self.headers, json=payload)
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            print(f"Помилка при запиті до PH API: {e}")
+            return None
+
+    def parse_response(self, raw_data: dict):
+        startups = []
+        try:
+            posts = raw_data["data"]["posts"]["edges"]
+            for post in posts:
+                node = post["node"]
+                tags = [edge["node"]["name"] for edge in node.get("topics", {}).get("edges", [])]
+                
+                startups.append({
+                    "ph_id": node.get("id"),
+                    "name": node.get("name"),
+                    "website_url": node.get("website"),
+                    "tagline": node.get("tagline"),
+                    "tags": tags,
+                    "votes_count": node.get("votesCount", 0)
+                })
+        except KeyError as e:
+            print(f"Помилка парсингу (можливо ліміт або немає даних): {e}")
             
-        edges = raw_data["data"]["posts"]["edges"]
-        
-        for edge in edges:
-            node = edge["node"]
-            
-            # Витягуємо всі назви тегів у звичайний список рядків
-            tags = [t["node"]["name"] for t in node.get("topics", {}).get("edges", [])]
-            
-            startup = {
-                "ph_id": node.get("id"),
-                "name": node.get("name"),
-                "tagline": node.get("tagline"),
-                # Нам потрібен саме сайт донора, а не сторінка на PH
-                "website_url": node.get("website"), 
-                "votes_count": node.get("votesCount"),
-                "created_at": node.get("createdAt"),
-                "tags": tags
-            }
-            parsed_data.append(startup)
-            
-        return parsed_data
+        # Дістаємо інфу про наступну сторінку
+        page_info = raw_data.get("data", {}).get("posts", {}).get("pageInfo", {})
+        return startups, page_info
 
     def run(self):
         all_startups = []
         
         for topic in self.topics:
-            print(f"Парсимо топік: {topic} 📌")
+            print(f"\nПочинаємо збір топіка: {topic} 📌")
             
-            raw_data = self.fetch_startups(topic=topic)
+            cursor = None
+            has_next_page = True
+            page_count = 1
             
-            if raw_data:
-                startups = self.parse_response(raw_data)
+            while has_next_page:
+                print(f"  Тягнемо сторінку {page_count}...")
+                raw_data = self.fetch_startups(topic=topic, cursor=cursor)
+                
+                if not raw_data:
+                    print("  Дані не прийшли, переходимо до наступного топіка.")
+                    break
+                    
+                startups, page_info = self.parse_response(raw_data)
+                
                 for startup in startups:
                     if startup.get("website_url"):
                         db.insert_startup(startup)
                         all_startups.append(startup)
                 
-            time.sleep(1)
+                # Оновлюємо курсор для наступного проходу
+                has_next_page = page_info.get("hasNextPage", False)
+                cursor = page_info.get("endCursor")
+                page_count += 1
+                
+                # Пауза між запитами, щоб не зловити Rate Limit
+                time.sleep(2)
             
-        print(f"Готово. Додано/Оброблено {len(all_startups)} стартапів.")
+        print(f"\nГотово. Додано/Оброблено {len(all_startups)} стартапів.")
         return all_startups
