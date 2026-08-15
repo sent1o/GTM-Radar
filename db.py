@@ -59,6 +59,19 @@ def init_db():
     )
     ''')
 
+    # Таблиця 5: Failed Logs
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS failed_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        startup_id INTEGER,
+        url TEXT,
+        stage TEXT,
+        error_message TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (startup_id) REFERENCES startups(id) ON DELETE CASCADE
+    )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -81,6 +94,18 @@ def insert_startup(startup):
         startup.get("votes_count")
     ))
     
+    conn.commit()
+    conn.close()
+
+def log_failed_startup(startup_id: int, url: str, stage: str, error_message: str):
+    # timeout=10 потрібен, щоб SQLite не кидала помилку "database is locked" 
+    # при одночасному записі з кількох асинхронних потоків
+    conn = sqlite3.connect(DB_NAME, timeout=10.0)
+    cursor = conn.cursor()
+    cursor.execute('''
+    INSERT INTO failed_logs (startup_id, url, stage, error_message)
+    VALUES (?, ?, ?, ?)
+    ''', (startup_id, url, stage, str(error_message)))
     conn.commit()
     conn.close()
 

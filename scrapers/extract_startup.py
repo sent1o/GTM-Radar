@@ -1,4 +1,5 @@
 import re
+import requests
 import urllib.parse
 from playwright.async_api import async_playwright
 
@@ -62,6 +63,17 @@ class StartupExtractor:
     async def extract_all_links(self, url: str) -> list:
         links = set()
         
+        # --- ДОДАНИЙ БЛОК ФІКСУ РЕДІРЕКТІВ ---
+        if "producthunt.com/r/" in url:
+            try:
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+                # Робимо GET, щоб нас перекинуло на реальний домен стартапу
+                r = requests.get(url, headers=headers, allow_redirects=True, timeout=15)
+                url = r.url
+                print(f"  [Redirect] Справжній URL: {url}")
+            except Exception as e:
+                print(f"  [Redirect] Не вдалося розплутати: {e}")
+        
         if not url.startswith('http'):
             url = 'https://' + url
             
@@ -88,7 +100,7 @@ class StartupExtractor:
                 page = await browser.new_page(viewport={'width': 1920, 'height': 1080})
                 
                 try:
-                    await page.goto(url, wait_until="networkidle", timeout=30000)
+                    await page.goto(url, wait_until="domcontentloaded", timeout=30000)
                     
                     # Плавний скрол
                     await page.evaluate("""

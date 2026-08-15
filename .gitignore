@@ -1,18 +1,24 @@
-# Віртуальне оточення та файли
-Проект/
-venv/
-env/
+# Секрети та конфіги
 .env
 
-# Бази даних
-*.db
-*.sqlite3
-
-# Кеш Python і Playwright
+# Кеш Python
 __pycache__/
 *.pyc
-.pytest_cache/
+*.pyo
+*.pyd
 
-# IDE
-.vscode/
-.idea/
+# База даних (краще не пушити її, щоб не було конфліктів)
+sites.db
+
+# Логи та тимчасові файли
+logs/
+*.log
+ph_raw_response.json
+scrimba_boss_text.txt
+
+# Frontend (Next.js / React)
+**/node_modules/
+**/.next/
+**/.npm-cache/
+**/build/
+**/dist/

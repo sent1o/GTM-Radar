@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function NotFound() { return <main className="grid min-h-screen place-items-center p-6 text-center"><div><p className="eyebrow">404</p><h1 className="mt-2 text-3xl font-bold">Company not found</h1><p className="mt-2 text-slate">It may no longer be on your radar.</p><Link href="/startups" className="button-primary mt-6">Explore startups</Link></div></main>; }
