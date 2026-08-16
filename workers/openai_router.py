@@ -1,5 +1,6 @@
 import json
 from urllib.parse import urlparse
+from logger import save_log
 from openai import OpenAI
 
 class OpenAIRouter:
@@ -7,28 +8,25 @@ class OpenAIRouter:
         self.client = OpenAI(api_key=api_key)
         self.model = "gpt-4o-mini"
 
-    def categorize_links(self, base_url: str, links: list) -> dict:
+    # ДОДАЛИ startup_name сюди
+    def categorize_links(self, startup_name: str, base_url: str, links: list) -> dict:
         if not links:
             return {}
 
-        # Створюємо словники для мапінгу
         url_map = {}
         short_to_id = {}
         
-        # Прибираємо слеш в кінці base_url для коректного відрізання
         clean_base = base_url.rstrip('/')
 
         for i, link in enumerate(links):
             str_i = str(i)
             url_map[str_i] = link
             
-            # Залишаємо тільки шлях (наприклад, /pricing) або сабдомен
             if link.startswith(clean_base):
                 short_link = link[len(clean_base):]
                 if not short_link: 
                     short_link = "/"
             else:
-                # Якщо це сабдомен (наприклад, https://status.anthropic.com)
                 parsed = urlparse(link)
                 short_link = parsed.netloc + parsed.path
                 
@@ -66,13 +64,14 @@ class OpenAIRouter:
             
             raw_result = json.loads(response.choices[0].message.content)
             
-            # Відновлюємо повні лінки по ID
             final_result = {}
             for category, link_id in raw_result.items():
                 str_id = str(link_id)
                 if str_id in url_map:
                     final_result[category] = url_map[str_id]
                     
+            # ВИПРАВЛЕНО: передаємо правильні змінні
+            save_log(startup_name, "router", {"input_links": short_to_id, "gpt_response": raw_result})
             return final_result
             
         except Exception as e:

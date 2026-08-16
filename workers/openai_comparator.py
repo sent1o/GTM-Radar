@@ -2,19 +2,16 @@ import os
 import json
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
+from logger import save_log
 
 load_dotenv()
 
 class OpenAIComparator:
     def __init__(self):
-        # Беремо ключ з .env
         self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_KEY"))
 
-    async def compare_texts(self, old_text: str, new_text: str) -> dict:
-        """
-        Порівнює два тексти і повертає JSON з інсайтами.
-        """
-        # Якщо старого тексту нема, це перший прогін, економимо токени
+    # ДОДАЛИ startup_name сюди
+    async def compare_texts(self, startup_name: str, old_text: str, new_text: str) -> dict:
         if not old_text:
             return {
                 "significant_change": True,
@@ -49,11 +46,19 @@ class OpenAIComparator:
                 model="gpt-4o-mini",
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"},
-                temperature=0.1 # Мінімальна температура, щоб не фантазував
+                temperature=0.1
             )
             
             result = json.loads(response.choices[0].message.content)
+            
+            # ВИПРАВЛЕНО: передаємо result замість parsed_json
+            save_log(startup_name, "comparator", {
+                "old_text_length": len(old_text) if old_text else 0,
+                "new_text_length": len(new_text) if new_text else 0,
+                "gpt_response": result
+            })
             return result
+            
         except Exception as e:
             print(f"Помилка при AI-порівнянні: {e}")
             return {

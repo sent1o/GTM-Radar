@@ -1,6 +1,7 @@
 import re
 import requests
 import urllib.parse
+from logger import save_log
 from playwright.async_api import async_playwright
 
 class StartupExtractor:
@@ -60,7 +61,7 @@ class StartupExtractor:
             
         return links
 
-    async def extract_all_links(self, url: str) -> list:
+    async def extract_all_links(self, startup_name: str, url: str) -> list:
         links = set()
         
         # --- ДОДАНИЙ БЛОК ФІКСУ РЕДІРЕКТІВ ---
@@ -96,7 +97,7 @@ class StartupExtractor:
             # Якщо сайтмап пустий або лінків підозріло мало, включаємо важку артилерію
             if len(links) < 10:
                 print("  [Playwright] Сайтмап слабкий або відсутній, запускаємо браузер...")
-                browser = await p.chromium.launch(headless=True)
+                browser = await p.chromium.launch(headless=False)
                 page = await browser.new_page(viewport={'width': 1920, 'height': 1080})
                 
                 try:
@@ -154,4 +155,5 @@ class StartupExtractor:
                     await browser.close()
             
         links = self.filter_target_links(links, clean_base_url)
+        save_log(startup_name, "links", {"total_found": len(links), "urls": list(links)})
         return list(links)

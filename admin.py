@@ -40,7 +40,7 @@ def get_recent_pages(limit=200):
     return df
 
 # --- Логіка Роутера з конкурентністю ---
-async def process_single_startup(startup_id, url, extractor, router, sem, log_callback):
+async def process_single_startup(startup_id, startup_name, url, extractor, router, sem, log_callback):
     async with sem:
         # Витягуємо чистий домен для логів
         parsed = urllib.parse.urlparse(url)
@@ -48,7 +48,8 @@ async def process_single_startup(startup_id, url, extractor, router, sem, log_ca
 
         log_callback(f"[INIT]   {domain} | Старт...")
         try:
-            links = await extractor.extract_all_links(url)
+            # Передаємо startup_name в екстрактор
+            links = await extractor.extract_all_links(startup_name, url)
             if not links:
                 err_msg = "Не знайдено жодного лінка."
                 log_callback(f"[ERROR]  {domain} | {err_msg}")
@@ -56,7 +57,9 @@ async def process_single_startup(startup_id, url, extractor, router, sem, log_ca
                 return startup_id, 'failed', None
             
             log_callback(f"[SCRAPE] {domain} | Зібрано {len(links)} лінків. ШІ аналізує...")
-            categorized = await asyncio.to_thread(router.categorize_links, base_url=url, links=links)
+            
+            # Передаємо url замість невизначеного base_url
+            categorized = await asyncio.to_thread(router.categorize_links, startup_name, url, links)
             
             if not categorized:
                 err_msg = "Роутер повернув порожній результат."
@@ -76,7 +79,8 @@ async def process_single_startup(startup_id, url, extractor, router, sem, log_ca
 async def run_playwright_router(startups_limit, log_placeholder):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT id, website_url FROM startups WHERE status = 'unscraped' LIMIT {startups_limit}")
+    # ДОДАЛИ name в SELECT
+    cursor.execute(f"SELECT id, name, website_url FROM startups WHERE status = 'unscraped' LIMIT {startups_limit}")
     targets = cursor.fetchall()
     conn.close()
     
@@ -89,18 +93,16 @@ async def run_playwright_router(startups_limit, log_placeholder):
     logs = []
     def log_cb(msg):
         logs.append(msg)
-        # Показуємо останні 12 рядків у консолі
         log_placeholder.code('\n'.join(logs[-12:]), language="bash")
         
     log_cb(f"🚀 Запуск пачки з {len(targets)} стартапів...")
     
-    # 3 одночасних браузери, щоб не вбити систему
     sem = asyncio.Semaphore(3)
-    tasks = [process_single_startup(sid, url, extractor, router, sem, log_cb) for sid, url in targets]
+    # ПЕРЕДАЄМО sname (startup_name) в таску
+    tasks = [process_single_startup(sid, sname, url, extractor, router, sem, log_cb) for sid, sname, url in targets]
     
     results = await asyncio.gather(*tasks)
     
-    # Записуємо результати в БД (робимо це послідовно, щоб SQLite не видав лок)
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     processed = 0
@@ -120,7 +122,7 @@ async def run_playwright_router(startups_limit, log_placeholder):
     
     log_cb("🎉 Всі процеси завершено.")
     return f"Оброблено {processed} стартапів."
-
+    
 # --- Старі синхронні функції (спрощено) ---
 async def run_ph_scraper(pages_limit, log_placeholder):
     scraper = ProductHuntScraper(api_token=os.getenv("PH_TOKEN"))
