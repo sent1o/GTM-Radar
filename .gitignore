@@ -18,7 +18,7 @@ ph_raw_response.json
 scrimba_boss_text.txt
 
 # Frontend (Next.js / React)
-referenced-chatgpt-conversation-this-is-an/
+frontend/
 **/node_modules/
 **/.next/
 **/.npm-cache/
